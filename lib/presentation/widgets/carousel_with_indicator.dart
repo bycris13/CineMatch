@@ -1,21 +1,23 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cinematch/domain/entities/movie.dart';
 import 'package:cinematch/presentation/screens/providers/carousel_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CarouselWithSlider extends StatelessWidget {
-  const CarouselWithSlider({super.key});
+  final List<Movie> movies;
+  const CarouselWithSlider({required this.movies, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final widthSlide = MediaQuery.of(context).size.width * 0.6;
-    final heightSilde = MediaQuery.of(context).size.width * 0.4;
-    final items = [1, 2, 3];
+    final widthSlide = MediaQuery.of(context).size.width * 0.7;
+    final heightSilde = MediaQuery.of(context).size.height * 0.2;
+    final items = movies.take(3).toList();
     final carouselProvider = context.watch<CarouselProvider>();
     return Column(
       children: [
         CarouselSlider(
-          items: items.map((i) {
+          items: items.map((movie) {
             return Builder(
               builder: (context) {
                 return SizedBox(
@@ -24,7 +26,7 @@ class CarouselWithSlider extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadiusGeometry.circular(16),
                       child: Image.network(
-                        'https://www.superherotoystore.com/cdn/shop/articles/Blog_Banners_8_4352178c-1daa-49ff-99eb-a4a9dcf843b0_1600x.jpg?v=1745580913',
+                        'https://image.tmdb.org/t/p/w500${movie.backdropPath}',
                         fit: BoxFit.cover,
                         width: widthSlide,
                         height: heightSilde,
@@ -43,7 +45,7 @@ class CarouselWithSlider extends StatelessWidget {
             enlargeStrategy:
                 CenterPageEnlargeStrategy.zoom, // Animacion de zoom
             viewportFraction:
-                0.7, // <-- Esto reduce el espacio entre las tarjetas
+                0.8, // <-- Esto reduce el espacio entre las tarjetas
             onPageChanged: (index, reason) {
               return carouselProvider.updateIndex(index);
             },

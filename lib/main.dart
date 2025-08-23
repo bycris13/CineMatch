@@ -1,6 +1,7 @@
 import 'package:cinematch/config/theme/app_theme.dart';
 import 'package:cinematch/presentation/screens/home/home_screen.dart';
 import 'package:cinematch/presentation/screens/providers/carousel_provider.dart';
+import 'package:cinematch/presentation/screens/providers/movies_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
             return CarouselProvider();
           },
         ),
+        ChangeNotifierProvider(create: (_) => MoviesProvider()..loadMovies()),
       ],
       child: MaterialApp(
         title: 'CineMatch',
